@@ -2,18 +2,21 @@ import time
 import requests
 
 
-def oneTest(func):
-    def wrapper():
+def oneTest(func: str) -> str:
+    def wrapper() -> str:
+        result = ''
         start = time.time()
         func()
         end = time.time()
-        print('[*] Время выполнения: {} секунд.'.format(end-start))
+        result = '[*] Время выполнения: {} секунд.'.format(end-start)
+        return result
     return wrapper
 
-def averageSpeedTest(iters=10):
-    def actual_decorator(func):
+def averageSpeedTest(iters = 10) -> str:
+    
+    def actual_decorator(func: str) -> str:
 
-        def wrapper_ad(*args, **kwargs):
+        def wrapper_ad(*args: tuple, **kwargs: dict):
             total = 0
             for i in range(iters):
                 start = time.time()
@@ -24,6 +27,7 @@ def averageSpeedTest(iters=10):
             return return_value
 
         return wrapper_ad
+    
     return actual_decorator
 
 def normalize_url(text: str) -> str:
@@ -53,5 +57,6 @@ if __name__== '__main__':
     @oneTest
     def fetch_webpage():
         webpage = requests.get('https://google.com')
-    #fetch_webpage()
+    #print(fetch_webpage())
+
     
